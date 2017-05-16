@@ -53,11 +53,11 @@ class App extends Component {
 
     }
     render (){
-  
+
       return(
         <div className="App">
           <div className="title">
-            Reminder Pro
+            Reminder Pro--for--America trip
           </div>
           <div className="form-inline reminder-form">
             <div className="form-group">
