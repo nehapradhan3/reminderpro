@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { connect } from 'react-redux';
-import { addReminder } from '../actions';
+import { addReminder, deleteReminder } from '../actions';
 import { bindActionCreators } from 'redux';
 
 class App extends Component {
@@ -17,6 +17,11 @@ class App extends Component {
     this.props.addReminder(this.state.text);
   }
 
+  deleteReminder(id){
+    console.log('deleting in application', id);
+    console.log('this.props', this.props);
+  }
+
   renderReminder(){
     const { reminders } = this.props;
     return(
@@ -25,7 +30,13 @@ class App extends Component {
         reminders.map(reminder =>{
         return(
           <li key={reminder.id} className="list-group-item">
-            <div>{ reminder.text}</div>
+            <div className="list-item">{ reminder.text}</div>
+            <div className="list-item delete-button"
+              onClick={() =>
+                this.deleteReminder(reminder.id)}
+              >
+              &#x2715;
+            </div>
           </li>
         )
       })
@@ -41,7 +52,7 @@ render (){
       <div className="title">
         Reminder Pro
       </div>
-      <div className="form-inline">
+      <div className="form-inline reminder-form">
         <div className="form-group">
           <input
             className="form-control"
@@ -49,7 +60,7 @@ render (){
             onChange={event => this.setState({text: event.target.value})}
             />
         </div>
-        { this.renderReminder() }
+
         <button
           type="button"
           className="btn btn-success"
@@ -58,6 +69,7 @@ render (){
           Add Reminder
         </button>
       </div>
+      { this.renderReminder() }
     </div>
   )
 }
@@ -69,4 +81,4 @@ function mapStateToProps(state){
     reminders:state
   }
 }
-export default connect(mapStateToProps, { addReminder })(App);
+export default connect(mapStateToProps, { addReminder, deleteReminder })(App);
